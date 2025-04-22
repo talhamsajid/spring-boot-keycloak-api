@@ -1,0 +1,23 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://mongodb:27017/keycloak_api_db}
+
+server:
+  port: ${PORT:8080}
+
+# Keycloak Production Configuration
+keycloak:
+  auth-server-url: ${KEYCLOAK_URL:https://keycloak-server/auth}
+  realm: ${KEYCLOAK_REALM:spring-boot-api-realm}
+  resource: ${KEYCLOAK_CLIENT_ID:spring-boot-api-client}
+  credentials:
+    secret: ${KEYCLOAK_CLIENT_SECRET}
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.example.api: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO

@@ -1,0 +1,39 @@
+spring:
+  profiles:
+    active: dev
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/keycloak_api_db
+      auto-index-creation: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+# Keycloak Configuration
+keycloak:
+  realm: spring-boot-api-realm
+  auth-server-url: http://localhost:8180/auth
+  resource: spring-boot-api-client
+  public-client: false
+  bearer-only: true
+  credentials:
+    secret: ${KEYCLOAK_CLIENT_SECRET:your-client-secret}
+
+# JWT Configuration
+jwt:
+  auth:
+    converter:
+      resource-id: spring-boot-api-client
+      principal-attribute: preferred_username
+
+# OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    disable-swagger-default-url: true

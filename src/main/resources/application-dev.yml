@@ -1,0 +1,22 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/keycloak_api_db
+
+# Keycloak Development Configuration
+keycloak:
+  auth-server-url: http://localhost:8180/auth
+  realm: spring-boot-api-realm
+  resource: spring-boot-api-client
+  public-client: false
+  bearer-only: true
+  credentials:
+    secret: your-client-secret
+
+# Logging Configuration for Development
+logging:
+  level:
+    root: INFO
+    com.example.api: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
