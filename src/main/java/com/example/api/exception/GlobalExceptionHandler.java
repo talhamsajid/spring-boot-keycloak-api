@@ -2,6 +2,7 @@ package com.example.api.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -120,6 +121,7 @@ public class GlobalExceptionHandler {
     }
 
     @Data
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class ErrorResponse {
         private int status;
@@ -129,6 +131,7 @@ public class GlobalExceptionHandler {
     }
 
     @Data
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class ValidationErrorResponse extends ErrorResponse {
         private Map<String, String> errors;

@@ -20,12 +20,21 @@ dependencies {
     
     // Keycloak Integration
     implementation 'org.keycloak:keycloak-spring-boot-starter:19.0.3'
+    implementation 'org.keycloak:keycloak-admin-client:19.0.3'
+    implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     
     // MongoDB and Hibernate OGM
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-    implementation 'org.hibernate.ogm:hibernate-ogm-mongodb:5.4.1.Final'
     implementation 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final'
+    
+    // Explicitly exclude conflicting MongoDB drivers
+    configurations.all {
+        exclude group: 'org.mongodb', module: 'mongo-java-driver'
+    }
+    
+    // Add the correct MongoDB driver version
+    implementation 'org.mongodb:mongodb-driver-sync:4.6.1'
     
     // JWT Support
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'

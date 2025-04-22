@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/keycloak_api_db
+      uri: ${MONGODB_URI:mongodb://localhost:27017/keycloak_api_db}
 
 # Keycloak Development Configuration
 keycloak:

@@ -1,12 +1,15 @@
 package com.example.api.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -16,6 +19,17 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final KeycloakJwtConverter keycloakJwtConverter;
+    
+    @Value("${keycloak.auth-server-url}")
+    private String keycloakServerUrl;
+    
+    @Value("${keycloak.realm}")
+    private String realm;
+
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withJwkSetUri(keycloakServerUrl + "/realms/" + realm + "/protocol/openid-connect/certs").build();
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

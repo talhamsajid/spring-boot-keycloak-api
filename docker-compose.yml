@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: keycloak_api_db
+    volumes:
+      - mongo_data:/data/db
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1.2
+    container_name: keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command: start-dev --http-port=8180
+    ports:
+      - "8180:8180"
+    depends_on:
+      - mongo
+
+  app:
+    build: .
+    container_name: spring-boot-keycloak-api
+    depends_on:
+      - mongo
+      - keycloak
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/keycloak_api_db
+      KEYCLOAK_URL: http://keycloak:8180/auth
+      KEYCLOAK_REALM: spring-boot-api-realm
+      KEYCLOAK_CLIENT_ID: spring-boot-api-client
+      KEYCLOAK_CLIENT_SECRET: your-client-secret
+    ports:
+      - "8080:8080"
+    restart: always
+
+volumes:
+  mongo_data:

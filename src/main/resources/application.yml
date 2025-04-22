@@ -3,7 +3,7 @@ spring:
     active: dev
   data:
     mongodb:
-      uri: mongodb://localhost:27017/keycloak_api_db
+      uri: ${MONGODB_URI:mongodb://localhost:27017/keycloak_api_db}
       auto-index-creation: true
 
 server:
